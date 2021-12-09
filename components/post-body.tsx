@@ -23,7 +23,7 @@ const PostBody = ({ content }: Props) => {
         remarkPlugins={[remarkParse, remarkMath, remarkGfm]}
         rehypePlugins={[rehypeKatex, rehypePrism]}
       >
-        content
+        {content}
       </ReactMarkdown>
     </div>
   );
