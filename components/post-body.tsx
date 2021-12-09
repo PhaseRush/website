@@ -3,10 +3,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 import rehypePrism from "rehype-prism-plus";
-import remarkParse from 'remark-parse';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex'
-
+import remarkParse from "remark-parse";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 type Props = {
   content: string;
@@ -23,8 +22,9 @@ const PostBody = ({ content }: Props) => {
         className={markdownStyles["markdown"] + " max-w-2xl mx-auto"}
         remarkPlugins={[remarkParse, remarkMath, remarkGfm]}
         rehypePlugins={[rehypeKatex, rehypePrism]}
-        children={content}
-      />
+      >
+        content
+      </ReactMarkdown>
     </div>
   );
 };
