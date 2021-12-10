@@ -5,6 +5,7 @@ import remarkHtml from "remark-html";
 import rehypePrism from "rehype-prism-plus";
 import remarkParse from "remark-parse";
 import remarkMath from "remark-math";
+import clsx from "clsx";
 import rehypeKatex from "rehype-katex";
 
 type Props = {
@@ -19,7 +20,7 @@ const PostBody = ({ content }: Props) => {
         dangerouslySetInnerHTML={{ __html: content }}
       /> */}
       <ReactMarkdown
-        className={markdownStyles["markdown"] + " max-w-4xl mx-auto"}
+        className={clsx(markdownStyles["markdown"], "max-w-4xl", "mx-auto")}
         remarkPlugins={[remarkParse, remarkMath, remarkGfm]}
         rehypePlugins={[rehypeKatex, rehypePrism]}
       >
