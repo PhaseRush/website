@@ -1,0 +1,158 @@
+## Solution 1
+
+### (a)
+
+Recall: $y=wx\epsilon+\mu,\ where \ \epsilon \sim N(0,1)$
+
+Recall: if $Z \sim N(0,1)$, $\mu + \sigma Z \sim N(\mu,\sigma^2)$
+
+So  $y|x,w,\mu \sim N(\mu,(wx)^2)$
+
+We can write down the expression for $p(y|x,w^2,\mu)$
+
+Recall: if $X \sim N(\mu,\sigma^2),p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}exp(-\frac{(x-\mu)^2}{2\sigma^2})$
+$$
+p(y|x,w^2;\mu) = \frac{1}{\sqrt{2 \pi w^2}\centerdot x}exp\lgroup-\frac{(y-\mu)^2}{2(wx)^2}\rgroup
+$$
+
+### (b)
+
+$$
+\mathscr{L}(w^2;\mathscr{D},\mu) = P(\mathscr{D}|w^2;\mu) 
+\\
+=\prod_{i=1}^Np(y_i|x_i,w^2;\mu)
+\\
+=\prod_{i=1}^N \frac{1}{\sqrt{2 \pi w^2}\centerdot x_i}exp\lgroup-\frac{(y_i-\mu)^2}{2(wx_i)^2}\rgroup
+$$
+
+### (c)
+
+$$
+log \mathscr{L}(w^2;\mathscr{D},\mu) = log \prod_{i=1}^Np(y_i|x_i,w^2;\mu)
+\\
+=\sum_{i=1}^{N}log\ p(y_i|x_i,w^2;\mu)
+\\
+=\sum_{i=1}^{N} \ log\ (\frac{1}{\sqrt{2 \pi w^2}\centerdot x_i}exp\lgroup-\frac{(y_i-\mu)^2}{2(wx_i)^2}\rgroup)
+\\
+=\sum_{i=1}^{N} (-\frac{(y_i-\mu)^2}{2(wx_i)^2} - log\ \sqrt{2 \pi w^2}\centerdot x_i)
+\\
+=-\frac{1}{2w^2} \sum_{i=1}^{N}\frac{(y_i-\mu)^2}{x_i^2} - Nlog \ w - Nlog\ \sqrt{2\pi}-\sum_{i=1}^{N}log\ x_i
+$$
+
+$$
+arg\ {max}_{w} \mathscr{L}(w^2;\mathscr{D},\mu) = arg\ {max}_{w} \ log \  \mathscr{L}(w^2;\mathscr{D},\mu)
+$$
+
+### (d)
+
+$$
+L(w^*) = arg\ {max}_{w} \ log \  \mathscr{L}(w^2;\mathscr{D},\mu)
+\\
+=arg\ {max}_{w} \ (-\frac{1}{2w^2} \sum_{i=1}^{N}\frac{(y_i-\mu)^2}{x_i^2} - Nlog \ w - Nlog\ \sqrt{2\pi}-\sum_{i=1}^{N}log\ x_i)
+\\
+=arg\ {min}_{w} \ (\frac{1}{2w^2} \sum_{i=1}^{N}\frac{(y_i-\mu)^2}{x_i^2} + Nlog \ w + Nlog\ \sqrt{2\pi}+\sum_{i=1}^{N}log\ x_i)
+\\
+=arg\ {min}_{w} \ (\frac{1}{2w^2} \sum_{i=1}^{N}\frac{(y_i-\mu)^2}{x_i^2} + Nlog \ w + \sum_{i=1}^{N}log\ x_i)
+$$
+
+
+
+### (e)
+
+$$
+l(w) = exp(\frac{L(w)}{N})
+\\
+=exp(\frac{1}{2N w^2}\sum_{i=1}^N \frac{(y_i-\mu)^2}{x_i^2}+log\ w + \frac{1}{N}\sum_{i=1}^{N}log\ x_i)
+\\
+= exp(\frac{1}{2N w^2}\sum_{i=1}^N \frac{(y_i-\mu)^2}{x_i^2}) + w +\frac{1}{N}\prod_{i=1}^Nx_i
+$$
+
+Recall: $e^x$ is strictly convex on $\mathbb{R}^+$, $x^n$ is strictly convex on $\mathbb{R}^+$
+
+So $l(w)$ is strictly convex on $\mathbb{R}^+$
+
+
+
+### (f)
+
+Because $x\longrightarrow e^x$is strictly increasing, i.e.: as $x$ increases, $e^x$ increases.
+
+So the global minimizer of $l(w)$ is equal to $w*$.
+
+
+
+### (g)
+
+
+
+## Solution 2
+
+### (a)
+
+![image-20220409211123629](./q2a.png)
+
+### (b)
+
+#### i.
+
+$$
+\frac{\partial \mathscr{l}}{\partial o_2}=o_2-y
+$$
+
+#### ii.
+
+$$
+\frac{\partial \mathscr{l}}{\partial \vec{w_2}}=\frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{w_2}}
+\\
+=(o_2-y)\vec{a_1}
+$$
+
+#### iii.
+
+$$
+\frac{\partial \mathscr{l}}{\partial \vec{a_1}}=\frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{a_1}}
+\\
+=(o_2-y)\vec{w_2}
+$$
+
+#### iv.
+
+$$
+\frac{\partial \mathscr{l}}{\partial \vec{z_1}}=\frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{a_1}} \frac{\partial \vec{a_1}}{\partial \vec{z_1}}
+\\
+=(o_2-y)\vec{w_2}\centerdot(\vec{1}-\vec{a_1}^2)
+$$
+
+#### v.
+
+$$
+\frac{\partial \mathscr{l}}{\partial \sigma^2}= \frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{a_1}} \frac{\partial \vec{a_1}}{\partial \vec{z_1}} \frac{\partial \vec{z_1}}{\partial \sigma^2}
+\\
+=(o_2-y)\vec{w_2}\centerdot(\vec{1}-\vec{a_1}^2)^T(-\frac{\gamma}{2}(\sigma^2)^{-\frac{3}{2}}(\vec{o_1}-\vec{\mu_1}))
+$$
+
+#### vi.
+
+$$
+\frac{\partial \sigma^2}{\partial \mu}=\frac{2}{d}(\vec{x}-\mu(\vec{x})\vec{1})^T \vec{1}
+$$
+
+#### vii.
+
+$$
+\frac{\partial \mathscr{l}}{\partial \mu}=\frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{a_1}} \frac{\partial \vec{a_1}}{\partial \vec{z_1}} \frac{\partial \vec{z_1}}{\partial \mu}+\frac{\partial \mathscr{l}}{\partial o_2} \frac{\partial o_2}{\partial \vec{a_1}} \frac{\partial \vec{a_1}}{\partial \vec{z_1}} \frac{\partial \vec{z_1}}{\partial \sigma^2} \frac{\partial \sigma^2}{\partial \mu}
+\\
+=(o_2-y)\vec{w_2}\centerdot(\vec{1}-\vec{a_1}^2)^T \vec{1} (-\frac{\gamma}{\sqrt{\sigma^2}}) + (o_2-y)\vec{w_2}\centerdot(\vec{1}-\vec{a_1}^2)^T (\frac{2}{d}(\vec{x}-\mu(\vec{x})\vec{1}))
+$$
+
+
+
+## Solution 3
+
+### (a)
+
+![image-20220410163352725](./q3a.png)
+
+### (b)
+
+![image-20220410175837927](./q3b.png)
